@@ -8,8 +8,17 @@ import (
 
 func RegisterControllers() {
 	uc := newUserController()
+	mc := newMessageController()
+	pc := newPostController()
+
 	http.Handle("/users", *uc)
 	http.Handle("/users/", *uc)
+
+	http.Handle("/messages", *mc)
+	http.Handle("/messages/", *mc)
+
+	http.Handle("/posts", *pc)
+	http.Handle("/posts/", *pc)
 
 }
 
