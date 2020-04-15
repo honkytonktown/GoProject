@@ -30,16 +30,17 @@ type Post struct {
 var (
 	posts      []*Post
 	client     *mongo.Client
-	connString = "mongodb+srv://Joe:Listennow55@clusterreact-a6ib4.mongodb.net/test?authSource=admin&replicaSet=ClusterReact-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true"
+	connString = "removed for github"
+	ctx        context.Context
 )
 
 func Connect() {
-	client, err := mongo.NewClient(options.Client().ApplyURI(connString))
+	var err error
+	client, err = mongo.NewClient(options.Client().ApplyURI(connString))
 	if err != nil {
 		fmt.Printf("there was an error: %v", err)
 	}
-
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 	err = client.Connect(ctx)
 	if err != nil {
 		fmt.Printf("there was an error: %v", err)
@@ -49,7 +50,7 @@ func Connect() {
 	if err != nil {
 		fmt.Printf("there was an error: %v", err)
 	} else {
-		fmt.Printf("Connection was established")
+		fmt.Println("Connection was established")
 	}
 
 	databases, err := client.ListDatabaseNames(ctx, bson.M{})
@@ -61,5 +62,10 @@ func Connect() {
 
 func GetPosts() []*Post {
 
-	return posts
+	collections, err := client.Database("db").ListCollectionNames(ctx, bson.D{})
+	if err != nil {
+		fmt.Printf("there was an error: %v", err)
+	}
+	fmt.Println(collections)
+	return nil
 }

@@ -12,6 +12,8 @@ type postController struct {
 }
 
 func (pc postController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+	models.Connect()
 	switch r.Method {
 	case http.MethodGet:
 		pc.getAll(w, r)
