@@ -10,6 +10,7 @@ func RegisterControllers() {
 	uc := newUserController()
 	mc := newMessageController()
 	pc := newPostController()
+	sd := newSQLController()
 
 	http.Handle("/users", *uc)
 	http.Handle("/users/", *uc)
@@ -19,6 +20,9 @@ func RegisterControllers() {
 
 	http.Handle("/posts", *pc)
 	http.Handle("/posts/", *pc)
+
+	http.Handle("/sqldata", *sd)
+	http.Handle("/sqldata/", *sd)
 
 }
 
